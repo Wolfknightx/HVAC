@@ -1,11 +1,8 @@
-
-
 import java.util.LinkedList;
 import java.util.Date;
 import java.util.Scanner;
 
 public class HVAC {
-
 
     /** Program to manage service calls to furnaces and AC units
      */
@@ -14,7 +11,6 @@ public class HVAC {
     private static LinkedList<ServiceCall> resolvedServiceCalls;
 
     private static Scanner scanner;   //Global scanner used for all input
-
 
     public static void main(String[] args) {
 
@@ -26,17 +22,12 @@ public class HVAC {
         //This will enable us to deal with calls in the order in which they were received
 
         todayServiceCalls = new LinkedList<ServiceCall>();
-
         // This will be used to store a list of resolved service calls.
-
         resolvedServiceCalls = new LinkedList<ServiceCall>();
-
         scanner = new Scanner(System.in);
-
         boolean quit = false;
 
         while (!quit) {
-
             System.out.println("1. Add service call to queue");
             System.out.println("2. Resolve current call");
             System.out.println("3. Print current call");
@@ -47,7 +38,6 @@ public class HVAC {
             int choice = getPositiveIntInput();
 
             switch (choice) {
-
                 case 1: {
                     addServiceCall();
                     break;
@@ -56,12 +46,10 @@ public class HVAC {
                     //Resolve service call
 
                     //Remove from head of the queue
-
                     if (todayServiceCalls.isEmpty()) {
                         System.out.println("No service calls today");
                         break;
                     }
-
                     ServiceCall resolvedCall = todayServiceCalls.remove();
 
                     System.out.println("Enter resolution for " + resolvedCall);
@@ -77,7 +65,6 @@ public class HVAC {
                     //Add this call to the list of resolved calls
                     resolvedServiceCalls.add(resolvedCall);
                     break;
-
                 }
                 case 3: {
                     //Print next service call - it is the one at the top of the queue
@@ -119,42 +106,31 @@ public class HVAC {
                     }
                     break;
                 }
-
                 case 6: {
                     quit = true;
                     break;
-
                 }
-
                 default: {
                     System.out.println("Enter a number from the menu choices");
                 }
-
             }
-
-
         }
-
         System.out.println("Thanks, bye!");
         //Tidy up... close the scanner
         scanner.close();
     }
 
-
     private static void addServiceCall() {
-
         //What type of thing needs servicing?
-
         System.out.println("1. Add service call for furnace");
         System.out.println("2. Add service call for AC unit");
-        System.out.println("3. Quit");
+        System.out.println("3. Add service call for water heater unit");
+        System.out.println("4. Quit");
 
         int choice = getPositiveIntInput();
 
         switch (choice) {
-
             case 1: {
-
                 System.out.println("Enter address of furnace");
                 String address = getStringInput();
 
@@ -162,7 +138,7 @@ public class HVAC {
                 String problem = getStringInput();
 
                 int type = 0;
-                while (type < 1 || type > 3) {
+                while (type < 1 || type > 4) {
                     System.out.println("Type of furnace?\n" +
                             Furnace.FurnaceTypeManager.furnaceTypeUserChoices());
                             //We can only choose from types defined in FurnaceTypeManager
@@ -174,10 +150,8 @@ public class HVAC {
                 todayServiceCalls.add(f);
                 System.out.println("Added the following furnace to list of calls:\n" + f);
                 break;
-
             }
             case 2: {
-
                 System.out.println("Enter address of AC Unit");
                 String address = getStringInput();
                 System.out.println("Enter description of problem");
@@ -189,25 +163,32 @@ public class HVAC {
                 todayServiceCalls.add(ac);
                 System.out.println("Added the following AC unit to list of calls:\n" + ac);
                 break;
-
             }
             case 3: {
-                return;
+                System.out.println("Enter address of the water heater");
+                String address = getStringInput();
+                System.out.println("Enter description of the problem(s) for the water heater");
+                String description = getStringInput();
+                System.out.println("Pleae enter the age of the water heater");
+                int age = getIntInput();
+                System.out.println();
+                WaterHeater wh = new WaterHeater(address, new Date(), description, age);
+                todayServiceCalls.add(wh);
+                System.out.println("Added the following Water Heater information to list of calls:\n" + wh);
+                break;
 
+            }
+            case 4: {
+                return;
             }
             default: {
                 System.out.println("Enter a number from the menu choices");
             }
-
         }
-
     }
 
-
     //Validation methods
-
     private static int getPositiveIntInput() {
-
         while (true) {
             try {
                 String stringInput = scanner.nextLine();
@@ -222,11 +203,9 @@ public class HVAC {
                 System.out.println("Please type a positive number");
             }
         }
-
     }
 
     private static double getPositiveDoubleInput() {
-
         while (true) {
             try {
                 String stringInput = scanner.nextLine();
@@ -241,14 +220,16 @@ public class HVAC {
                 System.out.println("Please type a positive number");
             }
         }
-
     }
 
     private static String getStringInput() {
-
         String entry = scanner.nextLine();
         return entry;
-
     }
-}
 
+    private static int getIntInput(){
+        int entry = scanner.nextInt();
+        return entry;
+    }
+
+}

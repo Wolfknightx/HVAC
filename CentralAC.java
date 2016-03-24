@@ -1,5 +1,3 @@
-
-
 import java.util.Date;
 
 /**
@@ -8,7 +6,6 @@ import java.util.Date;
 public class CentralAC extends ServiceCall{
 
     private String model;
-
 
     public CentralAC(String serviceAddress, String problemDescription, Date date, String model) {
         super(serviceAddress, problemDescription, date);
@@ -23,10 +20,8 @@ public class CentralAC extends ServiceCall{
         this.model = model;
     }
 
-
     @Override
     public String toString() {
-
         //These statements use the Java ternary operator
         //This says "if resolvedDate == null, then set resolvedDate to "Unresolved". Otherwise, set resolvedDate to resolvedDate.toString()
         //Same logic as an if-else statment, but more consise if the condition is simple and the if statment's task is 
@@ -35,7 +30,6 @@ public class CentralAC extends ServiceCall{
         String resolutionString = ( this.resolution == null) ? "Unresolved" : this.resolution;
         String feeString = (fee == UNRESOLVED) ? "Unresolved" : "$" + Double.toString(fee);
 
-
         return "Central AC Unit Service Call " + "\n" +
                 "Service Address= " + serviceAddress + "\n" +
                 "Problem Description = " + problemDescription  + "\n" +
@@ -43,6 +37,5 @@ public class CentralAC extends ServiceCall{
                 "Resolved Date = " + resolvedDateString + "\n" +
                 "Resolution = " + resolutionString + "\n" +
                 "Fee = " + feeString ;
-
     }
 }
