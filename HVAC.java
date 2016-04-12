@@ -26,6 +26,7 @@ public class HVAC {
         resolvedServiceCalls = new LinkedList<ServiceCall>();
         scanner = new Scanner(System.in);
         boolean quit = false;
+        HVACGUI g00ie = new HVACGUI(); //start the GUI from here
 
         while (!quit) {
             System.out.println("1. Add service call to queue");

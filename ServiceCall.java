@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -9,10 +10,13 @@ public class ServiceCall {
     protected String serviceAddress;
     protected String problemDescription;
     protected Date reportedDate;
+    String modifiedReportDate = new SimpleDateFormat("yyyy-MM-dd").format(reportedDate); //added to format the information stores.
     protected Date resolvedDate;
+    String modifiedResolvedDate = new SimpleDateFormat("yyyy-MM-dd").format(resolvedDate); //added to format the information stores.
     protected final static double UNRESOLVED = -1  ;  //Flag to indicate this hasn't been resolved so we don't have a fee yet
     protected String resolution;
     protected double fee;
+    protected int serviceID;  //This will be used to track the service calls placed according to ID#.
 
     public ServiceCall(String serviceAddress, String problemDescription, Date date) {
         this.serviceAddress = serviceAddress;
@@ -20,6 +24,19 @@ public class ServiceCall {
         this.reportedDate = date;
         this.fee = UNRESOLVED;
     }
+
+    @Override
+    public String toString(){
+        if (resolution.equals("")){
+            return "Address: " + serviceAddress + ", Issue: " + problemDescription + ", Date Reported: "
+                    + modifiedReportDate + ".";
+        }else {
+            return "Address: " + serviceAddress + ", Resolved By: " + resolution + ", Date Resolved: "
+                    + modifiedResolvedDate + ", Amount charged: " + fee + ".";
+        }
+    }
+
+
 
     public Date getResolvedDate() {
         return resolvedDate;
