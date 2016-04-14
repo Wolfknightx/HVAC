@@ -25,12 +25,17 @@ public class HVACGUI extends JFrame {
     private JComboBox cmbxCentralACTypes;
     private JComboBox cmbxFurnaceTypes;
     private JComboBox cmbxWaterHeaterTypes;
-    private JTextField textField3;
-    private JTextField textField4;
+    private JTextField txtServiceAddress;
+    private JTextField txtServiceIssue;
     private JButton btnAddCall;
     private JButton btnClearInfo;
     private int serviceCounter; //this will be used to keep track of the tickets being placed into the list.
     Date todaysDate = new Date();
+    String issue;
+    String address;
+    String furnaceSelectedValue;
+    String waterSelectedValue;
+    String centralSelectedValue;
 
     DefaultListModel<ServiceCall> serviceCallDefaultListModel;
     DefaultListModel<ServiceCall> closedServiceCallDefaultListModel;
@@ -51,24 +56,24 @@ public class HVACGUI extends JFrame {
         lstClosedCalls.setModel(serviceCallDefaultListModel);
         lstClosedCalls.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        //configure the drop down buttons for the different calls
-        configureDropDowns();
         //call methods to handle the buttons
-
+        configureButtons();
     }
 
     private void configureDropDowns(){
         //set up the dropdowns based on what is selected.
         if (rdoFurnace.isSelected()){
-            isDDVisible();
+            cmbxFurnaceTypes.removeAllItems();
             cmbxFurnaceTypes.addItem("Forced Air");
             cmbxFurnaceTypes.addItem("Boiler");
             cmbxFurnaceTypes.addItem("Octopus");
         }else if (rdoCentralAC.isSelected()){
+            cmbxCentralACTypes.removeAllItems();
             cmbxCentralACTypes.addItem("2016 Model X");
             cmbxCentralACTypes.addItem("2014 Model MarkII");
             cmbxCentralACTypes.addItem("2000 Model SmoothAir XI");
         }else if (rdoWaterHeater.isSelected()){
+            cmbxWaterHeaterTypes.removeAllItems();
             cmbxWaterHeaterTypes.addItem("0-1 Years");
             cmbxWaterHeaterTypes.addItem("2-4 Years");
             cmbxWaterHeaterTypes.addItem("5+ Years");
@@ -95,32 +100,51 @@ public class HVACGUI extends JFrame {
         rdoFurnace.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                isDDVisible();
+                configureDropDowns();
             }
         });
         rdoCentralAC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                isDDVisible();
+                configureDropDowns();
             }
         });
         rdoWaterHeater.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                isDDVisible();
+                configureDropDowns();
             }
         });
 
         btnAddCall.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String result = "";
+
+                issue = txtServiceIssue.getText();
+                address = txtServiceAddress.getText();
+                furnaceSelectedValue = cmbxFurnaceTypes.getSelectedItem().toString(); //trying to get the text in the dropdown.
+                waterSelectedValue = cmbxWaterHeaterTypes.getSelectedItem().toString();
+                centralSelectedValue = cmbxWaterHeaterTypes.getSelectedItem().toString();
+                if (rdoFurnace.isSelected()){
+                    result = furnaceSelectedValue + ", " + address + ", " + issue + ", " + todaysDate + ".";
+                }else if (rdoWaterHeater.isSelected()){
+                    result = waterSelectedValue + ", " + address + ", " + issue + ", " + todaysDate + ".";
+                }else if (rdoCentralAC.isSelected()){
+                    result = centralSelectedValue + ", " + address + ", " + issue + ", " + todaysDate + ".";
+                }
+
 
             }
         });
         btnClearInfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                txtServiceAddress.setText("");
+                txtServiceIssue.setText("");
             }
         });
 
@@ -140,7 +164,7 @@ public class HVACGUI extends JFrame {
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                System.exit(0);
             }
         });
 

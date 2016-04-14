@@ -187,7 +187,6 @@ public class HVAC {
             }
         }
     }
-
     //Validation methods
     private static int getPositiveIntInput() {
         while (true) {
